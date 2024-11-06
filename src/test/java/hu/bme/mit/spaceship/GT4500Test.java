@@ -94,6 +94,22 @@ class GT4500Test {
         assertTrue(secondFireResult, "Expected firing to succeed from SECONDARY store on second call in SINGLE mode");
     }
     
-    
+    @Test
+void fireTorpedo_Single_FiresFromSecondary_WhenPrimaryEmptyAndSecondaryWasLastFired() {
+
+    // Step 1: Fire from SECONDARY first to set wasPrimaryFiredLast to false
+    boolean firstFireResult = ship.fireTorpedo(FiringMode.SINGLE);
+    assertTrue(firstFireResult, "Expected first firing to succeed from SECONDARY store");
+
+    // Ensure PRIMARY is empty by the time we fire again (assuming it starts empty)
+    // Since PRIMARY is empty, the next call should fire from SECONDARY again
+
+    // Act: Fire again, which should now try to fire from SECONDARY a second time
+    boolean secondFireResult = ship.fireTorpedo(FiringMode.SINGLE);
+
+    // Assert
+    assertTrue(secondFireResult, "Expected firing to succeed from SECONDARY store again when PRIMARY is empty and SECONDARY was last fired");
+}
+
     
 }
